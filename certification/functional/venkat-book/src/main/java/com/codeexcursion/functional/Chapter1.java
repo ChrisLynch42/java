@@ -26,6 +26,11 @@ public class Chapter1 {
     stopWatch = new StopWatch("New Friends");
     friends.forEach(name -> System.out.println(name));
     stopWatch.stop();
+    
+    stopWatch = new StopWatch("Many Friends");
+    friends.parallelStream().forEach(name -> System.out.println(name));
+    stopWatch.stop();
+    
 
   }
 
