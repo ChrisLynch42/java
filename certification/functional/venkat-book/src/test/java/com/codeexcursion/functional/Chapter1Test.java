@@ -1,5 +1,6 @@
 package com.codeexcursion.functional;
 
+import com.codeexcursion.functional.chapter1.Friends;
 import org.junit.Test;
 
 import org.junit.runners.MethodSorters;
@@ -14,10 +15,15 @@ public class Chapter1Test
 {
 
   @Test
-  public void aTestOfLoadEnv() {
-    Chapter1 chapter1 = new Chapter1();
+  public void testFriends() {
+    Friends chapter1 = new Friends();
     chapter1.friends();
-    Assert.assertTrue(true);
+  }
+
+  @Test
+  public void testFriendsWhoseNameStartsWithN() {
+    Friends chapter1 = new Friends();
+    chapter1.friendsWhoseNameStartsWithN();
   }
 
 }
