@@ -1,4 +1,4 @@
-package com.codeexcursion.functional.chapter1;
+package com.codeexcursion.functional.chapter2;
 
 import com.codeexcursion.functional.StopWatch;
 import java.util.*;
