@@ -1,6 +1,7 @@
 package com.codeexcursion.functional;
 
-import com.codeexcursion.functional.chapter1.Friends;
+import com.codeexcursion.functional.chapter2.Friends;
+import com.codeexcursion.functional.chapter2.FriendsWhoseNameStartsWithN;
 import org.junit.Test;
 
 import org.junit.runners.MethodSorters;
@@ -16,14 +17,14 @@ public class Chapter1Test
 
   @Test
   public void testFriends() {
-    Friends chapter1 = new Friends();
-    chapter1.friends();
+    Friends friends = new Friends();
+    friends.logic();
   }
 
   @Test
   public void testFriendsWhoseNameStartsWithN() {
-    Friends chapter1 = new Friends();
-    chapter1.friendsWhoseNameStartsWithN();
+    FriendsWhoseNameStartsWithN friends = new FriendsWhoseNameStartsWithN();
+    friends.logic();
   }
 
 }
