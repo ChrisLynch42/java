@@ -8,11 +8,16 @@ package com.codeexcursion.functional.chapter3;
 import java.util.Arrays;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
+import static java.util.Comparator.comparing;
+import java.util.function.Function;
+
 /**
  *
  * @author lynchcs
  */
 public class Person {
+
+  final Function<Person, String> byName = person -> person.getName();
 
   private final String name;
   private final int age;
@@ -37,20 +42,35 @@ public class Person {
   public String toString() {
     return String.format("%s - %d", name, age);
   }
-  
-  
+
   public static void main(String[] args) {
     final List<Person> people = Arrays.asList(
-    new Person("John", 20),
-    new Person("Sara", 21),
-    new Person("Jane", 21),
-    new Person("Greg", 35));
+            new Person("John", 20),
+            new Person("Sara", 21),
+            new Person("Jane", 21),
+            new Person("Greg", 35));
+
+    final Function<Person, Integer> byAge = person -> person.getAge();
+    final Function<Person, String> byTheirName = person -> person.getName();    
     
     List<Person> ascendingAge = people.stream()
-      .sorted((person1, person2) -> person1.ageDifference(person2))
-      .collect(toList());
+            .sorted((person1, person2) -> person1.ageDifference(person2))
+            .collect(toList());
 
     ascendingAge.stream().forEach(System.out::println);
-    
+
+    people.stream()
+            .min(Person::ageDifference)
+            .ifPresent(youngest -> System.out.println("Youngest: " + youngest));
+
+    people.stream()
+            .max(Person::ageDifference)
+            .ifPresent(eldest -> System.out.println("Eldest: " + eldest));
+
+    List<Person> ageName = people.stream()
+            .sorted(comparing(byAge).thenComparing(byTheirName))
+            .collect(toList());
+  
+    ageName.stream().forEach(System.out::println);
   }
 }
