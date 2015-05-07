@@ -8,8 +8,11 @@ package com.codeexcursion.functional.chapter3;
 import java.util.Arrays;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.mapping;
 import static java.util.Comparator.comparing;
+import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -51,8 +54,8 @@ public class Person {
             new Person("Greg", 35));
 
     final Function<Person, Integer> byAge = person -> person.getAge();
-    final Function<Person, String> byTheirName = person -> person.getName();    
-    
+    final Function<Person, String> byTheirName = person -> person.getName();
+
     List<Person> ascendingAge = people.stream()
             .sorted((person1, person2) -> person1.ageDifference(person2))
             .collect(toList());
@@ -70,7 +73,25 @@ public class Person {
     List<Person> ageName = people.stream()
             .sorted(comparing(byAge).thenComparing(byTheirName))
             .collect(toList());
-  
+
     ageName.stream().forEach(System.out::println);
+
+    Map<Integer, List<Person>> peopleByAge
+            = people.stream().collect(Collectors.groupingBy(Person::getAge));
+    System.out.println("Grouped by age:" + peopleByAge);
+
+
+    Map<Integer, List<String>> nameOfPeopleByage
+            = people.stream().collect(Collectors.groupingBy(Person::getAge, Collectors.mapping(Person::getName, toList())));
+
+    System.out.println("Grouped names by age:" + nameOfPeopleByage);
+
+        
+    Map<Integer, List<String>> nameOfPeopleByAscendingAge
+            = people.stream().collect(Collectors.groupingBy(Person::getAge, Collectors.mapping(Person::getName, toList())));
+    
+    
+    System.out.println("Grouped names by age:" + nameOfPeopleByage);
+
   }
 }
