@@ -6,11 +6,15 @@
 package com.codeexcursion.functional.chapter3;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.mapping;
+import static java.util.stream.Collectors.reducing;
 import static java.util.Comparator.comparing;
 import java.util.Map;
+import java.util.Optional;
+import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -80,18 +84,23 @@ public class Person {
             = people.stream().collect(Collectors.groupingBy(Person::getAge));
     System.out.println("Grouped by age:" + peopleByAge);
 
-
     Map<Integer, List<String>> nameOfPeopleByage
             = people.stream().collect(Collectors.groupingBy(Person::getAge, Collectors.mapping(Person::getName, toList())));
 
     System.out.println("Grouped names by age:" + nameOfPeopleByage);
 
-        
     Map<Integer, List<String>> nameOfPeopleByAscendingAge
             = people.stream().collect(Collectors.groupingBy(Person::getAge, Collectors.mapping(Person::getName, toList())));
-    
-    
-    System.out.println("Grouped names by age:" + nameOfPeopleByage);
+
+    System.out.println("Grouped names by age ascending:" + nameOfPeopleByage);
+
+    Function<Person, Character> firstLetter = person -> person.getName().charAt(0);
+    Comparator<Person> compareAge = Comparator.comparing(Person::getAge);
+
+    Map<Character, Optional<Person>> oldestPersonByLetter
+            = people.stream().collect(Collectors.groupingBy(firstLetter, Collectors.reducing(BinaryOperator.maxBy(compareAge))));
+
+    System.out.println("Grouped oldest by letter:" + oldestPersonByLetter);
 
   }
 }
